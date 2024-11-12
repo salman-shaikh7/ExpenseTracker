@@ -1,0 +1,63 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Expenses by Payment Method";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h1>Expenses by Payment Method</h1>
+
+
+<!-- Canvas element for the pie chart -->
+<canvas id="expensesChart" width="100" height="100"></canvas>
+
+<script>
+    // Prepare the data for the pie chart
+    var paymentMethods = @Html.Raw(Json.Serialize(Model.Select(x => x.PaymentMethod.MethodName).ToArray()));
+    var totalAmounts = @Html.Raw(Json.Serialize(Model.Select(x => x.TotalAmount).ToArray()));
+
+    // Get the canvas context for the pie chart
+    var ctx = document.getElementById('expensesChart').getContext('2d');
+
+    // Create the pie chart
+    var expensesChart = new Chart(ctx, {
+        type: 'pie',  // Pie chart
+        data: {
+            labels: paymentMethods,  // Labels for the chart (payment methods)
+            datasets: [{
+                label: 'Expenses by Payment Method',
+                data: totalAmounts,  // Data for the chart (total amounts)
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40', '#9966FF'], // Different colors for each slice
+                hoverOffset: 4  // Slightly offset the slice on hover
+            }]
+        },
+        options: {
+            responsive: true,  // Make the chart responsive to window resizing
+            plugins: {
+                legend: {
+                    position: 'top',  // Position of the legend
+                },
+                tooltip: {
+                    callbacks: {
+                        // Format tooltip to display amounts as currency
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

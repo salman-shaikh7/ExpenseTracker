@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Home - ExpenseTracker";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container">
+        <header class="my-5">
+            <h1>Welcome to ExpenseTracker!</h1>
+            <p class="lead">Manage and track your expenses easily with our application.</p>
+        </header>
+
+        <div class="row">
+            <!-- Left Column: Cards -->
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <!-- First Card -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add Expense</h5>
+                            <p class="card-text">Record new expenses and categorize them.</p>
+                            <a href="@Url.Action("Create", "Expense")" class="btn btn-primary w-50">Add Expense</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <!-- Second Card -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Expenses</h5>
+                            <p class="card-text">See a list of all your expenses.</p>
+                            <a href="@Url.Action("Index", "Expense")" class="btn btn-primary w-50">View Expenses</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <!-- Third Card -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Statistics</h5>
+                            <p class="card-text">Track your spending trends and budget.</p>
+                            <a href="@Url.Action("Overview", "Expense")" class="btn btn-primary w-50">View Statistics</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Image -->
+            <div class="col-md-6">
+                <img src="~/accounts.png" alt="Placeholder Image" class="img-fluid" />
+            </div>
+        </div>
+
+        <footer class="text-center mt-5">
+            <p>&copy; 2024 ExpenseTracker. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

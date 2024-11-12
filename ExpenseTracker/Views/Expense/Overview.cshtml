@@ -1,0 +1,158 @@
+﻿@model ExpenseTracker.Models.ExpenseOverviewModel
+
+@{
+    ViewData["Title"] = "Expenses Overview";
+}
+
+<div class="container">
+    <!-- Expenses Charts Row -->
+    <div class="row">
+        <!-- Expenses by Category -->
+        <div class="col-md-4 col-sm-12 pt-4 pb-3">
+            <h1>Expenses by Category</h1>
+            <!-- Donut Chart Container -->
+            <canvas id="categoryDonutChart" class="chart-canvas"></canvas>
+        </div>
+
+        <!-- Expenses by Date -->
+        <div class="col-md-4 col-sm-12 pt-4 pb-3">
+            <h1>Expenses by Date</h1>
+            <!-- Bar Chart Canvas -->
+            <canvas id="expensesChart" class="chart-canvas"></canvas>
+        </div>
+
+        <!-- Expenses by Payment Method -->
+        <div class="col-md-4 col-sm-12 pt-4 pb-3">
+            <h1>Expenses by Payment Method</h1>
+            <!-- Pie Chart Canvas -->
+            <canvas id="paymentMethodPieChart" class="chart-canvas"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Include Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Expenses by Category - Donut Chart
+    var categories = @Html.Raw(Json.Serialize(Model.CategoryData.Select(item => item.Category).ToList()));
+    var categoryAmounts = @Html.Raw(Json.Serialize(Model.CategoryData.Select(item => item.TotalAmount).ToList()));
+
+    var categoryCtx = document.getElementById('categoryDonutChart').getContext('2d');
+    var categoryDonutChart = new Chart(categoryCtx, {
+        type: 'doughnut',
+        data: {
+            labels: categories,
+            datasets: [{
+                label: 'Expenses by Category',
+                data: categoryAmounts,
+                backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#4bc0c0'],
+                hoverBackgroundColor: ['#ff3a4b', '#2a93d8', '#9b56e6', '#ff9c2b', '#3ab9b9']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Expenses by Date - Bar Chart
+    var dateLabels = @Html.Raw(Json.Serialize(Model.DateData.Select(item => item.Date).ToList()));
+    var dateAmounts = @Html.Raw(Json.Serialize(Model.DateData.Select(item => item.TotalAmount).ToList()));
+
+    var dateCtx = document.getElementById('expensesChart').getContext('2d');
+    var expensesChart = new Chart(dateCtx, {
+        type: 'bar',
+        data: {
+            labels: dateLabels,
+            datasets: [{
+                label: 'Total Expenses',
+                data: dateAmounts,
+                backgroundColor: 'rgba(54, 162, 235, 1)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function (value) {
+                            return '$' + value.toFixed(2);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Expenses by Payment Method - Pie Chart
+    var paymentMethods = @Html.Raw(Json.Serialize(Model.PaymentMethodData.Select(item => item.PaymentMethod).ToArray()));
+    var paymentAmounts = @Html.Raw(Json.Serialize(Model.PaymentMethodData.Select(item => item.TotalAmount).ToArray()));
+
+    var paymentCtx = document.getElementById('paymentMethodPieChart').getContext('2d');
+    var paymentMethodPieChart = new Chart(paymentCtx, {
+        type: 'pie',
+        data: {
+            labels: paymentMethods,
+            datasets: [{
+                label: 'Expenses by Payment Method',
+                data: paymentAmounts,
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40', '#9966FF'],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+<style>
+    /* CSS to ensure canvas is small and responsive */
+    .chart-canvas {
+        max-width: 100%;
+        width: 100%; /* Ensure the canvas stretches within its container */
+        height: 300px !important; /* Adjust height to maintain aspect ratio */
+    }
+
+    /* Optional: Make charts more responsive with padding/margin adjustments */
+    .pt-4, .pb-3 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .container {
+        padding-top: 20px; /* Optional padding */
+    }
+
+    /* Optional: Resize the titles if necessary to make charts more balanced */
+    h1 {
+        font-size: 1.5rem; /* Adjust font size */
+    }
+</style>

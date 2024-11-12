@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "About - ExpenseTracker";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <style>
+        /* Custom styling to adjust image size */
+        .team-img {
+            width: 120px; /* Adjust this value to control image size */
+            height: 120px; /* Ensure the image is perfectly circular */
+            object-fit: cover; /* Ensure the image maintains aspect ratio without distortion */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container my-5">
+        <header class="text-center mb-5">
+            <h1>About ExpenseTracker</h1>
+            <p class="lead">A simple application to track and manage your expenses.</p>
+        </header>
+
+        <section class="mb-5">
+            <h2>Project Overview</h2>
+            <p>
+                ExpenseTracker is a web application designed to help users manage and track their expenses efficiently.
+                With a simple and intuitive interface, users can add, view, and analyze their spending habits.
+                The project aims to provide users with an easy way to control their finances and make informed budgeting decisions.
+            </p>
+            <p>
+                Key features of the ExpenseTracker include:
+            </p>
+            <ul>
+                <li>Track and categorize expenses</li>
+                <li>View a history of all expenses</li>
+                <li>Get statistical insights into spending trends</li>
+                <li>Set and manage budgets</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Meet the Team</h2>
+            <div class="row">
+                <!-- Member 1 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <img src="~/Salman_image.jpg" class="card-img-top rounded-circle mx-auto d-block team-img" alt="Member 1 Picture">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Salman Shaikh</h5>
+                            <p class="card-text">Salman is experieced data professional with experience in deploying webapplication. He he worked on backend part of this project ensured scalibilty</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Member 2 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <img src="~/Soumya_image.jpeg" class="card-img-top rounded-circle mx-auto d-block team-img" alt="Member 2 Picture">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Jane Smith</h5>
+                            <p class="card-text">Soumya is a front-end developer with expertise in UI/UX design and HTML/CSS. She is responsible for ensuring that ExpenseTracker is both visually appealing and user-friendly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- GitHub Repository Link Section -->
+        <section class="text-center mt-5">
+            <h3>Check Out Our Project on GitHub!</h3>
+            <p>Want to see the code? Visit our GitHub repository to explore the project.</p>
+            <a href="https://github.com/your-username/expense-tracker" class="btn btn-dark" target="_blank">View on GitHub</a>
+        </section>
+
+
+        <footer class="text-center mt-5">
+            <p>&copy; 2024 ExpenseTracker. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

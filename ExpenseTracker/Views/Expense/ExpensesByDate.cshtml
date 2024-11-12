@@ -1,0 +1,57 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Expenses by Date";
+}
+
+<h1>Expenses by Date</h1>
+
+<!-- Bar Chart Canvas -->
+<canvas id="expensesChart" width="400" height="200"></canvas>
+
+<!-- Include Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Prepare the data for the chart
+    var chartData = {
+        labels: [
+    @foreach (var item in Model)
+    {
+        <text>"@item.Date.ToString("MM/dd/yyyy")",</text>
+    }
+            ],
+        datasets: [{
+            label: 'Total Expenses',
+            data: [
+    @foreach (var item in Model)
+    {
+        <text>@item.TotalAmount.ToString("F2"),</text>
+    }
+                ],
+            backgroundColor: 'rgba(54, 162, 235, 1)', // Solid blue color for bars
+            borderColor: 'rgba(54, 162, 235, 1)',     // Same blue for border
+            borderWidth: 1
+        }]
+    };
+
+    // Bar chart configuration
+    var ctx = document.getElementById('expensesChart').getContext('2d');
+    var expensesChart = new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function (value, index, values) {
+                            return '$' + value.toFixed(2); // Format y-axis as currency
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>

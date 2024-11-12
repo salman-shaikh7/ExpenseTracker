@@ -1,0 +1,54 @@
+﻿@model Expense
+
+<div class="border p-3 mt-4">
+    <div class="row pb-2">
+        <h2 class="text-danger">Delete Expense</h2>
+        <hr />
+    </div>
+
+    <div class="alert alert-warning">
+        <strong>Warning!</strong> You are about to delete the following expense. This action cannot be undone.
+    </div>
+
+    <!-- Expense Information -->
+    <div class="mb-3">
+        <label class="form-label"><strong>Description:</strong></label>
+        <p>@Model.Description</p>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"><strong>Amount:</strong></label>
+        <p>@Model.Amount</p>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"><strong>Date:</strong></label>
+        <p>@Model.Date.ToString("yyyy-MM-dd")</p>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"><strong>Category:</strong></label>
+        <p>@Model.Category?.Name</p>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"><strong>Payment Method:</strong></label>
+        <p>@Model.PaymentMethod?.MethodName</p>
+    </div>
+
+    <!-- Confirm Delete Form -->
+    <form method="post" asp-action="Delete" asp-route-id="@Model.ExpenseId">
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-danger form-control">
+                    Confirm Deletion
+                </button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="Expense" asp-action="Index" class="btn btn-outline-secondary border form-control">
+                    Cancel
+                </a>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Expenses by Category";
+}
+    <div class="row">
+        <div class="col-md-4 pt-4 pb-3">
+            <h1>Expenses by Category</h1>
+
+            <!-- Donut Chart Container -->
+            <canvas id="categoryDonutChart"></canvas>
+        </div>
+    </div>
+
+<!-- Include Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Prepare data for the Donut Chart
+    var categories = @Html.Raw(Json.Serialize(Model.Select(item => item.Category.Name).ToList()));  // Get the category names
+    var amounts = @Html.Raw(Json.Serialize(Model.Select(item => item.TotalAmount).ToList()));  // Get the total amounts
+
+    // Create the Donut Chart
+    var ctx = document.getElementById('categoryDonutChart').getContext('2d');
+    var categoryDonutChart = new Chart(ctx, {
+        type: 'doughnut',  // Donut chart type
+        data: {
+            labels: categories,  // Categories as labels
+            datasets: [{
+                label: 'Expenses by Category',
+                data: amounts,  // Total amounts for each category
+                backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#4bc0c0'], // Add more colors as needed
+                hoverBackgroundColor: ['#ff3a4b', '#2a93d8', '#9b56e6', '#ff9c2b', '#3ab9b9'] // Colors on hover
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            // Format tooltip to show currency
+                            return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+

@@ -174,18 +174,6 @@ namespace ExpenseTracker.Controllers
             return View(expenses);
         }
 
-        //public IActionResult ExpensesByCategory()
-        //{
-        //    var groupedData = _db.expenses
-        //        .GroupBy(e => e.Category)
-        //        .Select(g => new
-        //        {
-        //            Category = g.Key,
-        //            TotalAmount = g.Sum(e => e.Amount)
-        //        }).ToList();
-
-        //    return View(groupedData);
-        //}
 
         public IActionResult ExpensesByCategory()
         {
@@ -202,19 +190,6 @@ namespace ExpenseTracker.Controllers
 
 
 
-        //public IActionResult ExpensesByDate()
-        //{
-        //    var groupedData = _db.expenses
-        //        .GroupBy(e => e.Date)
-        //        .Select(g => new
-        //        {
-        //            Date = g.Key,
-        //            TotalAmount = g.Sum(e => e.Amount)
-        //        }).ToList();
-
-        //    return View(groupedData);
-
-        //}
         public IActionResult ExpensesByDate()
         {
             var groupedData = _db.expenses
@@ -243,13 +218,6 @@ namespace ExpenseTracker.Controllers
 
             return View(groupedData);  // Return the grouped data to the view
         }
-
-        //public class ExpenseOverviewModel
-        //{
-        //    public IEnumerable<dynamic> CategoryData { get; set; }
-        //    public IEnumerable<dynamic> DateData { get; set; }
-        //    public IEnumerable<dynamic> PaymentMethodData { get; set; }
-        //}
 
         public IActionResult Overview()
         {
